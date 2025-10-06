@@ -1,5 +1,10 @@
 const connection = require("../config/database");
-const { getAllUsers } = require("../services/CRUDservice");
+const {
+  getAllUsers,
+  getUserById,
+  updateUserById,
+  deleteUsersId,
+} = require("../services/CRUDservice");
 const getHomepage = async (req, res) => {
   let results = await getAllUsers();
 
@@ -8,8 +13,11 @@ const getHomepage = async (req, res) => {
 const getUserAdd = (req, res) => {
   return res.render("useradd.ejs"); // render file views/smapleflie
 };
-const getUpdatePage = (req, res) => {
-  return res.render("edit.ejs");
+const getUpdatePage = async (req, res) => {
+  const userId = req.params.id;
+  let user = await getUserById(userId);
+
+  return res.render("edit.ejs", { userEdit: user });
 };
 const postCreateUser = async (req, res) => {
   // console.log("req body o day:", req.body);
@@ -22,11 +30,38 @@ const postCreateUser = async (req, res) => {
     [email, name, city]
   );
   console.log(results);
-  res.send("create user suscces");
+
+  res.redirect("/");
 };
+const postDeleteUser = async (req, res) => {
+  const userId = req.params.id;
+  let user = await getUserById(userId);
+  res.render("delete.ejs", { userEdit: user });
+};
+const postEdisUsers = async (req, res) => {
+  // console.log("req body o day:", req.body);
+  let email = req.body.email;
+  let name = req.body.myname;
+  let city = req.body.city;
+  let userId = req.body.userId;
+
+  await updateUserById(email, city, name, userId);
+
+  // res.send("update user suscces");
+  res.redirect("/");
+};
+const postHandleRemoveUser = async (req, res) => {
+  const id = req.body.userId;
+  await deleteUsersId(id);
+  res.redirect("/");
+};
+
 module.exports = {
   getHomepage,
   postCreateUser,
   getUserAdd,
   getUpdatePage,
+  postEdisUsers,
+  postDeleteUser,
+  postHandleRemoveUser,
 };

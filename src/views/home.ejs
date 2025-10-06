@@ -154,7 +154,10 @@ tbody tr:not(:first-child):hover {
         
         <td>
           <a href="/edit/<%= user.id %>" >edit</a>
-          <button>delete</button>
+          <form action="/delete/<%= user.id %>" method="post">
+            <button>delete</button>
+          </form>
+
         </td>
       </tr>
     <% }) %>

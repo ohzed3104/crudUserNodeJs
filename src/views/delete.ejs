@@ -5,15 +5,15 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="form-edit-user">
-        <form action="/update" method="post">
+    <div class="form-delete-user">
+        <form action="/delete-user" method="post">
             <fieldset>
-                <h1>Edit Users</h1>
+                <h1>Delete Users</h1>
+                <label for="">are u sure delete?</label>
                 <input style="display: none" type="id" name="userId"  id="id" placeholder="id" value="<%= userEdit.id %>">
                 <input type="text" name="email"  id="email" placeholder="email" value="<%= userEdit.email %>">
-                <input type="text" name="myname" id="name" placeholder="name" value="<%= userEdit.name %>">
-                <input type="text"  name="city" id="city" placeholder="city" value="<%= userEdit.city %>">
-                <button>submit</button>
+        
+                <button>Confirm</button>
             </fieldset>
         </form>
     </div>
